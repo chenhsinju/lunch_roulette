@@ -39,8 +39,8 @@ class Method(str, Enum):
     remove = 'remove'
 
 
-@app.get('/{meal}/')
-def get_restaurant(meal: Meal):
+@app.get('/{meal}/roulette/')
+def roulette_restaurant(meal: Meal):
     choice_list = []
     if meal is Meal.lunch:
         choice_list = lunch_list
@@ -49,6 +49,17 @@ def get_restaurant(meal: Meal):
 
     choice_result = Roulette(choice_list=choice_list).roulette()
     return {'restaurant': choice_result}
+
+
+@app.get('/{meal}/')
+def get_restaurant(meal: Meal):
+    choice_list = []
+    if meal is Meal.lunch:
+        choice_list = lunch_list
+    elif meal is Meal.dinner:
+        choice_list = dinner_list
+
+    return choice_list
 
 
 @app.post('/{meal}/{method}/')
